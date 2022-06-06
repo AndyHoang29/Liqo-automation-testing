@@ -1,0 +1,146 @@
+apiServer:
+    address: ""
+    trustedCA: false
+auth:
+    config:
+        enableAuthentication: true
+    imageName: liqo/auth-service
+    ingress:
+        annotations: {}
+        class: ""
+        enable: false
+        host: ""
+    initContainer:
+        imageName: liqo/cert-creator
+    pod:
+        annotations: {}
+        extraArgs: []
+        labels: {}
+    portOverride: ""
+    service:
+        annotations: {}
+        type: LoadBalancer
+    tls: true
+awsConfig:
+    accessKeyId: ""
+    clusterName: eks-cluster
+    region: eu-west-1
+    secretAccessKey: ""
+controllerManager:
+    config:
+        resourceSharingPercentage: 90
+    imageName: liqo/liqo-controller-manager
+    pod:
+        annotations: {}
+        extraArgs:
+            - --disable-kubelet-certificate-generation=true
+        labels: {}
+crdReplicator:
+    imageName: liqo/crd-replicator
+    pod:
+        annotations: {}
+        extraArgs: []
+        labels: {}
+discovery:
+    config:
+        autojoin: true
+        clusterLabels:
+            liqo.io/provider: eks
+            topology.kubernetes.io/region: eu-west-1
+        clusterName: eks-cluster
+        enableAdvertisement: false
+        enableDiscovery: false
+        incomingPeeringEnabled: true
+        ttl: 90
+    imageName: liqo/discovery
+    pod:
+        annotations: {}
+        extraArgs: []
+        labels: {}
+fullnameOverride: ""
+gateway:
+    config:
+        listeningPort: 5871
+    imageName: liqo/liqonet
+    pod:
+        annotations: {}
+        extraArgs: []
+        labels: {}
+    replicas: 1
+    service:
+        annotations:
+            service.beta.kubernetes.io/aws-load-balancer-type: nlb
+        type: LoadBalancer
+metricAgent:
+    enable: true
+    imageName: liqo/metric-agent
+    initContainer:
+        imageName: liqo/cert-creator
+    pod:
+        annotations: {}
+        extraArgs: []
+        labels: {}
+nameOverride: ""
+networkConfig:
+    mtu: 1440
+networkManager:
+    config:
+        additionalPools: []
+        podCIDR: 10.0.0.0/16
+        reservedSubnets: []
+        serviceCIDR: 172.20.0.0/16
+    imageName: liqo/liqonet
+    pod:
+        annotations: {}
+        extraArgs: []
+        labels: {}
+openshiftConfig:
+    enable: false
+proxy:
+    config:
+        listeningPort: 8118
+    imageName: envoyproxy/envoy:v1.21.0
+    pod:
+        annotations: {}
+        extraArgs: []
+        labels: {}
+    service:
+        annotations: {}
+        type: ClusterIP
+pullPolicy: IfNotPresent
+route:
+    imageName: liqo/liqonet
+    pod:
+        annotations: {}
+        extraArgs: []
+        labels: {}
+storage:
+    enable: true
+    realStorageClassName: ""
+    storageNamespace: liqo-storage
+    virtualStorageClassName: liqo
+tag: "v0.4.0"
+virtualKubelet:
+    extra:
+        annotations: {}
+        args: []
+        labels: {}
+    imageName: liqo/virtual-kubelet
+    initContainer:
+        imageName: liqo/init-virtual-kubelet
+    virtualNode:
+        extra:
+            annotations: {}
+            labels: {}
+webhook:
+    imageName: liqo/liqo-webhook
+    initContainer:
+        imageName: liqo/webhook-configuration
+    mutatingWebhookConfiguration:
+        annotations: {}
+    pod:
+        annotations: {}
+        extraArgs: []
+        labels: {}
+    service:
+        annotations: {}
